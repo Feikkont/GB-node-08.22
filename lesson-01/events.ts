@@ -1,4 +1,4 @@
-import EventEmmiter from 'events';
+import EventEmmiter from 'lesson-01/events';
 
 const emmiter = new EventEmmiter()
 
