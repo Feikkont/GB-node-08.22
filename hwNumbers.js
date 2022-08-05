@@ -5,8 +5,6 @@ let arr = [];
 let colorFlag = 1
 const inputValidate = (input) => {
     if (+input == input) {
-        // Pass the return value in the done callback
-        // console.log(typeof +input)
         return true;
     } else {
         console.log(colors.blue('Нужно ввести число'));
@@ -15,23 +13,14 @@ const inputValidate = (input) => {
 }
 
 const colorsObj = {
-    1: 'green',
-    2: 'yellow',
-    3: 'red'
+    1: 'green', 2: 'yellow', 3: 'red'
 }
 
-inquirer.prompt([
-    {
-        name: 'startNumber',
-        message: 'Введите стартовое число: ',
-        validate: inputValidate
-    },
-    {
-        name: 'finishNumber',
-        message: 'Введите конечное число: ',
-        validate: inputValidate
-    },
-])
+inquirer.prompt([{
+    name: 'startNumber', message: 'Введите стартовое число: ', validate: inputValidate
+}, {
+    name: 'finishNumber', message: 'Введите конечное число: ', validate: inputValidate
+},])
     .then(({startNumber, finishNumber}) => {
         nextPrime:
             for (let i = +startNumber; i <= +finishNumber; i++) { // Для всех i...
@@ -51,16 +40,7 @@ inquirer.prompt([
         if (!arr.length) {
             console.log(colors.red('простых чисел в диапазоне нет'))
         }
-
-        // Use user feedback for... whatever!!
-        // console.log(answers)
     })
     .catch((error) => {
-        if (error.isTtyError) {
-            console.log('if', error)
-            // Prompt couldn't be rendered in the current environment
-        } else {
-            console.log('if', error)
-            // Something else went wrong
-        }
+        console.log(error)
     });
