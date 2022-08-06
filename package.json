@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "lesson-01/index.ts",
-   "scripts": {
+  "scripts": {
     "start": "ts-node index.mjs",
     "test": "jest"
   },
@@ -21,7 +21,8 @@
   "dependencies": {
     "colors": "^1.4.0",
     "date-fns": "^2.29.1",
-    "inquirer": "^9.0.2"
+    "inquirer": "^9.0.2",
+    "yargs": "^17.5.1"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",

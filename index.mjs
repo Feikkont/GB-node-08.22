@@ -1,4 +1,5 @@
 import fs from 'fs'
+import {Transform} from 'stream'
 
 //readFileSync читать файл в синхронном режиме
 // const data = fs.readFileSync('./access.log', {encoding: 'utf-8'}) // меняем сразу кодировку в utf 8
