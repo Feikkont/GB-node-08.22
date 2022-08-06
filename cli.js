@@ -1,10 +1,14 @@
+#!C:\Program Files\nodejs\node.exe
 // import fs from 'fs'
 // import readline from "readline";
+// import * as path from "path";
+// import inquirer from "inquirer";
 // import yargs from "yargs";
 const yargs = require('yargs');
 const fs = require('fs');
 const readline = require('readline')
 const path = require('path')
+const inquirer = require('inquirer')
 
 //принимаем аргументы, первые 2 откидываем
 const [filePath] = process.argv.slice(2);
@@ -80,3 +84,32 @@ const rl = readline.createInterface({
 const executeDir = process.cwd()
 
 //inquirer
+//массив для choices
+
+//фильтруем массив
+//lstatSync информация о файле(размер и т.д.) .isFile() проверяет файл это или нет
+const fileFilter = (fileOdDir) => fs.lstatSync(fileOdDir).isFile()
+//получаем список всего что есть в папке в массив
+const list = fs.readdirSync('./').filter(fileFilter);
+
+
+
+// console.log(list)
+
+inquirer.prompt([
+    {
+        name: 'fileName',
+        type: 'list',
+        message: 'Выберете файл для чтения',
+        choices: list,
+    }
+]).then(({fileName}) => {
+const fullFilePath = path.join(executeDir, fileName)
+    fs.readFile(fullFilePath, "utf-8", (err, data) => {
+        if (err) {
+            console.log('error: ', err)
+        }
+        console.log('data', data)
+    })
+})
+console.log(process.argv)
