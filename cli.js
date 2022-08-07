@@ -88,28 +88,74 @@ const executeDir = process.cwd()
 
 //фильтруем массив
 //lstatSync информация о файле(размер и т.д.) .isFile() проверяет файл это или нет
-const fileFilter = (fileOdDir) => fs.lstatSync(fileOdDir).isFile()
-//получаем список всего что есть в папке в массив
-const list = fs.readdirSync('./').filter(fileFilter);
+// const fileFilter = (fileOdDir) => fs.lstatSync(fileOdDir).isFile()
+// //получаем список всего что есть в папке в массив
+// const list = fs.readdirSync('./').filter(fileFilter);
+//
+//
+//
+// // console.log(list)
+//
+// inquirer.prompt([
+//     {
+//         name: 'fileName',
+//         type: 'list',
+//         message: 'Выберете файл для чтения',
+//         choices: list,
+//     }
+// ]).then(({fileName}) => {
+// const fullFilePath = path.join(executeDir, fileName)
+//     fs.readFile(fullFilePath, "utf-8", (err, data) => {
+//         if (err) {
+//             console.log('error: ', err)
+//         }
+//         console.log('data', data)
+//     })
+// })
+// console.log(process.argv)
+const ACCESS_LOG = './access.log';
 
-
-
-// console.log(list)
-
-inquirer.prompt([
-    {
-        name: 'fileName',
-        type: 'list',
-        message: 'Выберете файл для чтения',
-        choices: list,
+const writeStream = fs.createWriteStream(ACCESS_LOG, {
+        encoding: "utf-8",
+        flags: 'a', //флаг - дозаписываем в файл
     }
-]).then(({fileName}) => {
-const fullFilePath = path.join(executeDir, fileName)
-    fs.readFile(fullFilePath, "utf-8", (err, data) => {
-        if (err) {
-            console.log('error: ', err)
-        }
-        console.log('data', data)
+)
+
+
+const ipLogGen = async () => {
+    let ip = (Math.floor(Math.random() * 255) + 1) + "." + (Math.floor(Math.random() * 255)) + "." + (Math.floor(Math.random() * 255)) + "." + (Math.floor(Math.random() * 255));
+    return [
+        `${ip} - - [25/May/2021:00:07:24 +0000] "POST /baz HTTP/1.1" 200 0 "-" "curl/7.47.0"`,
+        `${ip} - - [25/May/2021:00:07:17 +0000] "GET /foo HTTP/1.1" 200 0 "-" "curl/7.47.0"`
+    ]
+}
+
+// while (fs.lstatSync(ACCESS_LOG).size <= 104857600) {
+// }
+
+(async ()=>{
+    for (let i=0 ; i <= 20; i++) {
+        ipLogGen().forEach((logString) => {
+        await writeStream.write(logString + '\n')
     })
-})
-console.log(process.argv)
+    console.log('in cicle',fs.lstatSync(ACCESS_LOG).size)
+
+}
+})()
+
+// for (let i=0 ; i <= 20; i++) {
+//     ipLogGen().forEach((logString) => {
+//         writeStream.write(logString + '\n')
+//     })
+//     // console.log('in cicle',fs.lstatSync(ACCESS_LOG).size)
+// }
+
+
+writeStream.end() //закрываем стрим
+console.log('last', fs.lstatSync(ACCESS_LOG).size)
+
+
+// console.log('size: ', fs.lstatSync(ACCESS_LOG).size)
+// console.log(fs.lstatSync(ACCESS_LOG).size <= 104857600)
+
+rl.close()
