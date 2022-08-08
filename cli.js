@@ -113,49 +113,78 @@ const executeDir = process.cwd()
 //     })
 // })
 // console.log(process.argv)
+
+
 const ACCESS_LOG = './access.log';
 
-const writeStream = fs.createWriteStream(ACCESS_LOG, {
+const writeStreamAccessLog = fs.createWriteStream(ACCESS_LOG, {
         encoding: "utf-8",
         flags: 'a', //флаг - дозаписываем в файл
     }
 )
 
+//Генерируем файл 100мб
+const writingFunc = async (query) => new Promise((resolve, reject) => writeStreamAccessLog.write(query, resolve));
 
 const ipLogGen = async () => {
     let ip = (Math.floor(Math.random() * 255) + 1) + "." + (Math.floor(Math.random() * 255)) + "." + (Math.floor(Math.random() * 255)) + "." + (Math.floor(Math.random() * 255));
-    return [
+    let arr = [
         `${ip} - - [25/May/2021:00:07:24 +0000] "POST /baz HTTP/1.1" 200 0 "-" "curl/7.47.0"`,
         `${ip} - - [25/May/2021:00:07:17 +0000] "GET /foo HTTP/1.1" 200 0 "-" "curl/7.47.0"`
-    ]
+    ];
+    for (const item of arr) {
+        await writingFunc(item + '\n')
+    }
+    if (fs.lstatSync(ACCESS_LOG).size <= 104857600) {
+        ipLogGen()
+    } else {
+        writeStreamAccessLog.end() //закрываем стрим
+        rl.close()
+    }
 }
+fs.lstatSync(ACCESS_LOG).size <= 104857600 ? ipLogGen() : console.log("Файл 100мб")
 
-// while (fs.lstatSync(ACCESS_LOG).size <= 104857600) {
-// }
+writeStreamAccessLog.end() //закрываем стрим
 
-(async ()=>{
-    for (let i=0 ; i <= 20; i++) {
-        ipLogGen().forEach((logString) => {
-        await writeStream.write(logString + '\n')
+const fileFilter = (fileOdDir) => fs.lstatSync(fileOdDir).isFile()
+//получаем список всего что есть в папке в массив
+// const list = fs.readdirSync('./').filter(fileFilter);
+const list = fs.readdirSync('./');
+
+inquirer.prompt([
+    {
+        name: 'fileName',
+        type: 'list',
+        message: 'Выберете файл для чтения',
+        choices: list,
+    },
+    {
+        name: 'ip',
+        message: 'Введите Ip',
+    }
+]).then(({fileName, ip}) => {
+    const fullFilePath = path.join(executeDir, fileName)
+    const readStream = fs.createReadStream(fullFilePath, {
+        encoding: 'utf-8',
     })
-    console.log('in cicle',fs.lstatSync(ACCESS_LOG).size)
+    const writeStreamFilteredIp = fs.createWriteStream(`${ip}_requests.log`, {
+            encoding: "utf-8",
+            flags: 'a', //флаг - дозаписываем в файл
+        }
+    )
+    const readInterface = readline.createInterface({
+        input: readStream,
+    });
+    readInterface.on('line', (line) => { //chunk - часть данных
+        regExp = /^\S+/gmi;
+        if (line.match(regExp)[0] == ip) {
+            writeStreamFilteredIp.write(line + '\n')
+        }
 
-}
-})()
+    })
+})
+// console.log(`Файл с именем ${ip}_requests.log создан`)
 
-// for (let i=0 ; i <= 20; i++) {
-//     ipLogGen().forEach((logString) => {
-//         writeStream.write(logString + '\n')
-//     })
-//     // console.log('in cicle',fs.lstatSync(ACCESS_LOG).size)
-// }
+// writeStreamFilteredIp.end() //закрываем стрим
 
-
-writeStream.end() //закрываем стрим
-console.log('last', fs.lstatSync(ACCESS_LOG).size)
-
-
-// console.log('size: ', fs.lstatSync(ACCESS_LOG).size)
-// console.log(fs.lstatSync(ACCESS_LOG).size <= 104857600)
-
-rl.close()
+// rl.close()
