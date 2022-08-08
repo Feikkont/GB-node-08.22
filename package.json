@@ -4,7 +4,7 @@
   "description": "",
   "main": "lesson-01/index.ts",
   "scripts": {
-    "start": "ts-node index.mjs",
+    "start": "node cli.mjs",
     "test": "jest"
   },
   "repository": {
@@ -33,6 +33,6 @@
     "typescript": "^4.7.4"
   },
   "bin": {
-    "reader": "cli.js"
+    "reader": "cli.mjs"
   }
 }
