@@ -4,7 +4,6 @@ import * as path from "path";
 
 const app = express()
 
-
 //навигатор
 const currentDirectory = process.cwd();
 
@@ -54,4 +53,4 @@ app.get('/', (req, res) => {
     }
 })
 
-app.listen(4000);
+app.listen(4000, () => console.log('Server been started http://localhost:4000'));

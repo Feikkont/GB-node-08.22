@@ -17,7 +17,6 @@ const options = yargs
 console.log(options);
 console.log(process.cwd());
 
-
 let currentDirectory = options.d;
 
 class ListItem {
@@ -59,7 +58,7 @@ const run = async () => {
             console.log('null', data)
         } else {
             const regExp = new RegExp(options.p, 'img');
-            console.log('not null',data.match(regExp))
+            console.log('not null', data.match(regExp))
         }
     }
 }

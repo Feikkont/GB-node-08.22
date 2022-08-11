@@ -48,5 +48,4 @@ app.patch('/conversations/:room', (req, res) => {
     res.sendStatus(204, 'No Data')
 })
 
-
 app.listen(3333, () => console.log('Server been started http://localhost:3333'))

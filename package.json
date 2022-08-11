@@ -4,7 +4,9 @@
   "description": "",
   "main": "lesson-01/index.ts",
   "scripts": {
-    "start": "ts-node lesson-02/index.mjs",
+    "crud": "node crudchat.mjs",
+    "cli": "node cliFileNavigator.js",
+    "serv": "node FileNavServ.mjs",
     "test": "jest"
   },
   "repository": {
