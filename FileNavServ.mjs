@@ -45,23 +45,13 @@ app.get('/', (req, res) => {
             if (err) {
                 console.log(err)
             } else {
-                console.log(data.toString())
-                res.setHeader('Content-Type', 'text/html');
-                res.send(data)
+                console.log(req.query.open)
+                res.send(data.toString())
             }
         })
-        // console.log(req.query.open)
-        // res.sendFile(req.query.open)
     } else {
         res.json(getFiles(currentDirectory))
     }
 })
-
-// app.get('/', (req, res) => {
-//     // console.log(req.params.dir)
-//     req.
-//         res.send("asdasd")
-//     // res.json(getFiles(req.params.dir))
-// })
 
 app.listen(4000);

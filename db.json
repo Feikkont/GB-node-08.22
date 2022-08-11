@@ -1,0 +1,70 @@
+{
+  "conversations": {
+    "room1": {
+      "id": "I1fEjQl4Ew80rTdIIZqRC",
+      "name": "room1"
+    },
+    "room2": {
+      "id": "Gxs11Opcxk1hBNiYWxUVw",
+      "name": "room2"
+    },
+    "room3": {
+      "id": "yn15OpBeCmeCG88HFv-c_",
+      "name": "room3"
+    },
+    "room4": {
+      "id": "I1fEjQl4Ew80rTdIDZqRC",
+      "name": "room4"
+    }
+  },
+  "messages": {
+    "room1": {
+      "ASHAdlS8p2eeaFpin7gtH": {
+        "body": "Добро пожаловать в наш чат from thunk",
+        "date": "2022-06-27 16:10:16",
+        "id": "ASHAdlS8p2eeaFpin7gtH",
+        "user": "Bot"
+      },
+      "OtE5xHc_HnBRjgbsSB-R": {
+        "body": "крутой ID епта",
+        "date": "2022-06-27 16:21:51",
+        "id": "OtE5xHc_HnBRjgbsSB-R",
+        "user": "Сидоров Михаил"
+      },
+      "dWFr9JErkYyuCHMVjBG-p": {
+        "body": "тест епта",
+        "date": "2022-06-27 16:10:15",
+        "id": "dWFr9JErkYyuCHMVjBG-p",
+        "user": "Сидоров Михаил"
+      },
+      "iMEI5R3sfudn5rdV5LTyS": {
+        "body": "ZX",
+        "date": "2022-06-27 11:55:29",
+        "id": "iMEI5R3sfudn5rdV5LTyS",
+        "user": "Сидоров Михаил"
+      },
+      "jHoDEcEM0RBEfCdr2bPNa": {
+        "body": "Добро пожаловать в наш чат from thunk",
+        "date": "2022-06-27 11:55:29",
+        "id": "jHoDEcEM0RBEfCdr2bPNa",
+        "user": "Bot"
+      },
+      "k6E55AfpAeedqt2EBNf9I": {
+        "body": "Привет",
+        "date": "2022-06-27 11:50:29",
+        "id": 321,
+        "user": "Bot"
+      }
+    }
+  },
+  "profile": {
+    "TekYINEPxAgYg1Vu78Aq1CfRISg1": {
+      "firstName": "Петров",
+      "lastName": "Вася"
+    },
+    "uShoHTxdRfgCGtViyUAHVn7SSgi1": {
+      "firstName": "Сидоров",
+      "lastName": "Михаил"
+    }
+  }
+}
