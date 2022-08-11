@@ -13,7 +13,7 @@
       "name": "room3"
     },
     "room4": {
-      "id": "I1fEjQl4Ew80rTdIDZqRC",
+      "id": "I1fEjQasdEw44rTdsDZqRC",
       "name": "room4"
     }
   },
@@ -29,19 +29,19 @@
         "body": "крутой ID епта",
         "date": "2022-06-27 16:21:51",
         "id": "OtE5xHc_HnBRjgbsSB-R",
-        "user": "Сидоров Михаил"
+        "user": "Иванов Иван"
       },
       "dWFr9JErkYyuCHMVjBG-p": {
         "body": "тест епта",
         "date": "2022-06-27 16:10:15",
         "id": "dWFr9JErkYyuCHMVjBG-p",
-        "user": "Сидоров Михаил"
+        "user": "Иванов Иван"
       },
       "iMEI5R3sfudn5rdV5LTyS": {
         "body": "ZX",
         "date": "2022-06-27 11:55:29",
         "id": "iMEI5R3sfudn5rdV5LTyS",
-        "user": "Сидоров Михаил"
+        "user": "Иванов Иван"
       },
       "jHoDEcEM0RBEfCdr2bPNa": {
         "body": "Добро пожаловать в наш чат from thunk",
@@ -60,11 +60,11 @@
   "profile": {
     "TekYINEPxAgYg1Vu78Aq1CfRISg1": {
       "firstName": "Петров",
-      "lastName": "Вася"
+      "lastName": "Петр"
     },
     "uShoHTxdRfgCGtViyUAHVn7SSgi1": {
-      "firstName": "Сидоров",
-      "lastName": "Михаил"
+      "firstName": "Иванов",
+      "lastName": "Иван"
     }
   }
 }
