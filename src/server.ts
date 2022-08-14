@@ -3,7 +3,9 @@ import bodyParser from "body-parser";
 
 import ChatRouter from './routes/chats';
 import MessagesRouter from './routes/messages'
+import mongoose from "mongoose";
 
+mongoose.connect('mongodb://localhost:27017/gb').then(()=> console.log("mongose connected")).catch(error => console.log(error));
 
 const app = express();
 

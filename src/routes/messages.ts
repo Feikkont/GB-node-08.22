@@ -1,73 +1,112 @@
 import express from "express";
+import {Messages} from "../models/messages";
 
 const router = express.Router();
 
-//типизация
-interface Message {
-    id: string,
-    user: string,
-    body: string,
-}
+// //типизация
+// interface Message {
+//     id: string,
+//     user: string,
+//     body: string,
+// }
+//
+// type Messages = Record<string, Message[]>
 
-type Messages = Record<string, Message[]>
+// let messages: Messages = {
+//     room1: [{
+//         id: "1",
+//         user: "user",
+//         body: "string",
+//     },
+//         {
+//             id: "2",
+//             user: "Bot",
+//             body: "string",
+//         },
+//         {
+//             id: "3",
+//             user: "user",
+//             body: "string1",
+//         }
+//     ]
+// };
 
-let messages: Messages = {};
-
-router.get('/', (req, res) => {
-
-    res.send(messages)
+router.get('/', async (req, res) => {
+    const messages = await Messages.find()
+    res.json(messages)
 })
 
-.post('/', (req, res) => {
-    messages[req.body.chatName] = [];
-    res.send("Ok")
-})
-
-router.get('/:chatId', (req, res) => {
-    res.send(messages[req.params.chatId])
-})
-
-router.post('/:chatId', (req, res) => {
-    const newMessage: Message = req.body;
-    messages[req.params.chatId].push(newMessage)
-    // console.log(req.body)
-    // chats.push(req.body)
-    // res.status(201)
-    res.send('ok')
-})
-
-router.delete('/:chatId/:messgeId', (req, res) => {
-    messages[req.params.chatId] = messages[req.params.chatId].filter(
-        message => message.id !== req.params.messgeId
-    );
-    // console.log(req.params.id)
-    // chats = chats.filter(chat => chat.id !== req.params.id)
-    // res.status(201)
-    res.send('ok')
-})
-
-router.put('/:chatId/:messgeId', (req, res) => {
-    messages[req.params.chatId] = messages[req.params.chatId].map(message => {
-        if (message.id === req.params.messgeId) {
-            return req.body
-        } else {
-            return message
+    .post('/', async (req, res) => {
+        try {
+            // const newMessage = await Messages.create({
+            //     chatId: '1',
+            //     user: 'USER',
+            //     body: 'some text'
+            // })
+            const  newMessage = await Messages.create(req.body)
+            res.json(newMessage)
+        } catch (error) {
+            res.status(500)
+            res.send(error)
         }
     })
 
-    // console.log(req.params.id)
-    // chats = chats.map((chat) => {
-    //     if (chat.id === req.params.id) {
-    //         return {
-    //             id: chat.id,
-    //             name: req.body.name
-    //         }
+router.get('/:chatId', async (req, res) => {
+    const message = await Messages.find({chatId : req.params.chatId})
+    res.json(message)
+})
+
+// router.post('/:chatId', async (req, res) => {
+//     // const newMessage: Message = req.body;
+//     // messages[req.params.chatId].push(newMessage)
+//     // console.log(req.body)
+//     // chats.push(req.body)
+//     // res.status(201)
+//     const newMessage = await Messages.create(req.body)
+//     res.status(201)
+//     res.json(newMessage)
+// })
+
+router.delete('/:messgeId', async (req, res) => {
+    // messages[req.params.chatId] = messages[req.params.chatId].filter(
+    //     message => message.id !== req.params.messgeId
+    // );
+    // // console.log(req.params.id)
+    // // chats = chats.filter(chat => chat.id !== req.params.id)
+    // // res.status(201)
+    // res.send('ok')
+
+    const deleted = await Messages.findByIdAndDelete(req.params.messgeId)
+    res.status(201)
+    res.json(deleted)
+})
+
+router.put('/:messgeId', async (req, res) => {
+    // messages[req.params.chatId] = messages[req.params.chatId].map(message => {
+    //     if (message.id === req.params.messgeId) {
+    //         return req.body
     //     } else {
-    //         return chat
+    //         return message
     //     }
     // })
-    // res.status(201)
-    res.send('ok')
+    //
+    // // console.log(req.params.id)
+    // // chats = chats.map((chat) => {
+    // //     if (chat.id === req.params.id) {
+    // //         return {
+    // //             id: chat.id,
+    // //             name: req.body.name
+    // //         }
+    // //     } else {
+    // //         return chat
+    // //     }
+    // // })
+    // // res.status(201)
+    // res.send('ok')
+    const updateMessage = await Messages .findByIdAndUpdate(req.params.messgeId, req.body)
+    res.status(201)
+    res.json(updateMessage)
+
 })
 
 export default router
