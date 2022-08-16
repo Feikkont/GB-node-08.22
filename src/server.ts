@@ -4,8 +4,11 @@ import bodyParser from "body-parser";
 import ChatRouter from './routes/chats';
 import MessagesRouter from './routes/messages'
 import mongoose from "mongoose";
+import 'dotenv/config'
 
-mongoose.connect('mongodb://localhost:27017/gb').then(()=> console.log("mongose connected")).catch(error => console.log(error));
+const URI = process.env.MONGODB_URI as string
+
+mongoose.connect(URI).then(()=> console.log("mongose connected")).catch(error => console.log(error));
 
 const app = express();
 
@@ -23,4 +26,4 @@ app.use('/chats', ChatRouter);
 app.use('/messages', MessagesRouter)
 
 
-app.listen(3333, () => console.log('Server been started http://localhost:3333'))
+app.listen(process.env.PORT|| 3333, () => console.log('Server been started http://localhost:3333'))

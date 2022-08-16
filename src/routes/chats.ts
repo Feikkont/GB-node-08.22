@@ -17,14 +17,21 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    try {
-        const newChat = await Chats.create(req.body)
-        // chats.push(req.body)
+    // try {
+    //     const newChat = await Chats.create(req.body)
+    //     // chats.push(req.body)
+    //     res.status(201)
+    //     res.json(newChat)
+    // } catch (err) {
+    //     res.send(err)
+    // }
+    await Chats.create(req.body, (err: Error, newChat: typeof Chats) => {
+        if (err) {
+            //handler error
+        }
         res.status(201)
         res.json(newChat)
-    } catch (err) {
-        res.send(err)
-    }
+    })
  })
 
 router.delete('/:id', async (req, res) => {
