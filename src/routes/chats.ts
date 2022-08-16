@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request} from "express";
 import {Chats} from "../models/chats";
 
 const router = express.Router();
@@ -10,13 +10,16 @@ const router = express.Router();
 // }
 //
 // let chats: Chats[] = [];
+export interface TypedRequestBody<T> extends Request {
+    body: T;
+}
 
 router.get('/', async (req, res) => {
     const chats = await Chats.find()
     res.send(chats)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req: TypedRequestBody<{ name: string }>, res, next) => {
     // try {
     //     const newChat = await Chats.create(req.body)
     //     // chats.push(req.body)
@@ -25,14 +28,19 @@ router.post('/', async (req, res) => {
     // } catch (err) {
     //     res.send(err)
     // }
+    //обработчик ошибок
     await Chats.create(req.body, (err: Error, newChat: typeof Chats) => {
         if (err) {
             //handler error
+            next(err)
+            // res.status(500)
+            // res.send(err.message)
+            // return
         }
         res.status(201)
         res.json(newChat)
     })
- })
+})
 
 router.delete('/:id', async (req, res) => {
     // console.log(req.params.id)
