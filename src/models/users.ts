@@ -25,11 +25,10 @@ UserSchema.pre("save", async function (next) {
 });
 
 // добавляем метод для дешифрации пароля
-UserSchema.methods.isValidPassword = async function (password: string) {
-    const compare = await bcrypt.compare(password, this.password); // в password Будет пароль который ввел пользователь
-                                                                    // в this.pasword пароль из БД
-    return compare
-
-}
+// UserSchema.methods.isValidPassword = async function (password: string) {
+//     const compare = await bcrypt.compare(password, this.password); // в password Будет пароль который ввел пользователь
+//                                                                     // в this.pasword пароль из БД
+//     return compare;
+// }
 
 export const User = model('User', UserSchema, 'User')
